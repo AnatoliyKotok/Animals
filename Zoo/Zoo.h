@@ -104,6 +104,7 @@ private:
 };
 
 class Zoo {
+public:
 
 	void pushAnimal(Animal an) {
 		animal.push_back(an);
@@ -114,53 +115,54 @@ class Zoo {
 	void pushCamera(VideoCamera cam) {
 		cameras.push_back(cam);
 	}
-public:
-	void menu(Worker worker, VideoCamera camera, Animal animals) {
-		int action;
-		do {
-			cout << "1.Add animal" << endl;
-			cout << "2.Add worker" << endl;
-			cout << "3.Add camera" << endl;
-			cout << "4.Distribution of aniamal" << endl;
-			cout << "5.Distribution of zone" << endl;
-			cout << "6.Feed animal" << endl;
-			cout << "Select action->";
-			cin >> action;
-			system("cls");
-			switch (action)
-			{
-			case 1:
-				pushAnimal(animals);
-				for (auto an : animal) {
-					an.print();
-				}
-				break;
-			case 2:
-				PushWorker(worker);
-				for (auto wo : workers) {
-					wo.print();
-				}
-				break;
-			case 3:
-				pushCamera(camera);
-				for (auto cam : cameras) {
-					cam.print();
-				}
-				break;
-			case 4:
-				worker.Watch(animals);
-				break;
-			case 5:
-				camera.Watch(animals);
-				break;
-			case 6:
-				worker.Feed(animals);
-				break;
-			}
-		} while (action != 7);
+	void printAniaml() {
+		for (auto an : animal) {
+			an.print();
+		}
+	}
+	void printWorker() {
+		for (auto work : workers) {
+			work.print();
+		}
+	}
+	void printCamera() {
+		for (auto cam : cameras) {
+			cam.print();
+		}
 	}
 private:
 	vector<Animal>animal;
 	vector<Worker>workers;
 	vector<VideoCamera> cameras;
+};
+class Menu:public Zoo {
+public:
+	Menu() = default;
+	void addAnimal(Animal animal) {
+		Zoo::pushAnimal(animal);
+	}
+	void addWorker(Worker worker) {
+		Zoo::PushWorker(worker);
+	}
+	void addCamera(VideoCamera camera) {
+		Zoo::pushCamera(camera);
+	}
+	void watchAnimals(Worker worker, Animal animal) {
+		worker.Watch(animal);
+	}
+	void watchCamera(VideoCamera camera, Animal animal) {
+		camera.Watch(animal);
+	}
+	void feedAnimal(Worker worker, Animal animal) {
+		worker.Feed(animal);
+	}
+	void printAniaml() {
+		Zoo::printAniaml();
+	}
+	void printWorker() {
+		Zoo::printWorker();
+	}
+	void printCamera() {
+		Zoo::printCamera();
+	}
 };
